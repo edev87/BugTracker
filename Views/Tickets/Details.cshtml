@@ -1,0 +1,246 @@
+﻿@using BugTracker.Enums;
+@model BugTracker.Models.Ticket
+@inject IBTFileService _fileService
+@inject IImageService _ImageService
+
+<h1>Ticket Details</h1>
+<h4>@Model.DeveloperUser?.FullName</h4>
+
+<div>
+	<div class ="xfont-weighteighteightgetainer-fluid">
+		<div class="row gy-2">
+			<div class="col-md-12 col">
+				<div class="row col-cols-2 mt-5 bg-secondary">
+					<div class="card col m-1 p-2">
+						<div class="card-body">
+							
+                                <strong>Ticket Title:</strong>
+                                 <h5> @Model.Title</h5>
+                          
+                         
+
+                            @*Description of Ticket*@
+							<p> <strong>Ticket Description:</strong> @Model.Description</p>
+							<div class="progress-container progress-info m-b-25">
+								@*Project Name and information*@
+								<span class="progress-badge" style="font-size:small">Project: @Model?.Project?.Name </span>
+								<div class="progress">
+									@*Progress bar logic*@
+									@*Variable from razor logic*@
+									<div class="progress-bar" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="width: [Percent]%;">
+										@*Variable from razor logic*@
+										<span class="progress-value">0%</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="card col m-1 p-2">
+						<div class="card-body">
+							<ul class="list-unstyled">
+								@*Ticket date*@
+								<li><strong>Date Entered:</strong> <span class="">  @Model?.Created </</span></li>
+								@*Project end date*@
+								<li><strong>Project Deadline:</strong> <span class="">  @Model?.Project?.EndDate </</span></li>
+								@*Ticket type*@
+								<li><strong>Ticket Type:</strong> <span class="">  @Model?.TicketType?.Name </span></li>
+								@*Ticket priority*@
+								<li><strong>Ticket Priority:</strong> <span class=""> @Model?.TicketPriority?.Name</span></li>
+								@*Ticket status*@
+								<li><strong>Ticket Status:</strong> <span class="">  @Model?.TicketStatus?.Name </span></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-8 col col-cols-2 mt-5 ">
+				<div class="col">
+					<div class="bg-secondary">
+						<div class="card m-1 p-2">
+							<div class="card-header">
+								<h2>Comments</h2>
+							</div>
+							<div class="card-body" style="overflow-y:auto;height:600px;">
+
+								@if (User.Identity!.IsAuthenticated)
+								{
+									<div class="comment-respond">
+										<h4 class="title">Post a comment</h4>
+										<form asp-action="AddTicketComment" asp-controller="Tickets">
+											<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+											<input type="hidden" asp-for="Id" name="TicketId" />
+											<div class="row row-md-10">
+												<div class="col-12">
+													<div class="form-group">
+														<label for="message">Leave a Reply</label>
+														<textarea id="editor" class="form-control" name="Comment"></textarea>
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-12">
+												<div class="form-submit cerchio">
+													<input name="submit" type="submit" id="submit" class="axil-button button-rounded" value="Post Comment">
+												</div>
+											</div>
+										</form>
+									</div>
+								}
+								else
+								{
+									<a class="axil-button button-rounded" asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Url.Action("Details", "BlogPosts", new { id = Model.Id })" tabindex="0"><span>Login to Add Your Comment</span></a>
+								}
+								<hr />
+								<h6>Comments</h6>
+								<ul class="right_chat list-unstyled mb-0">
+									@*Loop to show comments made for the Ticket*@
+									@foreach (TicketComment comment in Model!.Comments)
+									{
+										<!-- Start Single Comment  -->
+										<li class="comment">
+											<div class="comment-body">
+												<div class="single-comment">
+													<div class="comment-img">
+														<img src="@_fileService.ConvertByteArrayToFile(null,null,DefaultImage.BTUserImage)" alt="User Image" style="height:40px;width:40px">
+													</div>
+													<div class="comment-inner">
+														<h6 class="commenter">
+															<a class="hover-flip-item-wrapper" href="#">
+																<span class="hover-flip-item">
+																	<span data-text="@comment.User?.FullName">@comment.User?.FullName</span>
+																</span>
+															</a>
+														</h6>
+														<div class="comment-meta">
+															<div class="time-spent">@comment.Created.ToString("MMM dd, yyyy")</div>
+															<div class="reply-edit">
+															</div>
+														</div>
+														<div class="comment-text">
+															<p class="b2">
+																@Html.Raw(comment.Comment)
+															</p>
+														</div>
+													</div>
+												</div>
+											</div>
+										</li>
+										<!-- End Single Comment  -->
+									}
+
+								</ul>
+							</div>
+							<div class="card-footer">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col">
+					<div class="bg-secondary">
+						<div class="card m-1 p-2">
+							<div class="card-header">
+								<h2>Attachments</h2>
+							</div>
+							<div class="card-body" style="overflow-y:auto;height:300px;">
+
+								<div class="row clearfix">
+									<div>
+										<form asp-action="AddTicketAttachment" asp-controller="Tickets" enctype="multipart/form-data" method="post">
+											<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+											<input type="hidden" asp-for="@Model.Id" name="TicketId">
+											<div class="media-body ml-3">
+												<label>
+													Description
+													<input name="Description" type="text" class="form-control" />
+												</label><br />
+												<label class="btn btn-outline-primary btn-sm">
+													<input name="FormFile" type="file" class="form-control-file" />
+												</label>
+												<button type="submit" class="btn btn-outline-secondary btn-sm md-btn-flat">Submit</button>
+											</div>
+										</form>
+									</div>
+								</div>
+
+								<hr />
+
+								<h6>Attachments</h6>
+								<div class="container">
+									<div class="row">
+										@foreach (TicketAttachment item in Model.Attachments)
+										{
+											<div class="col col-sm-2">
+												<a asp-action="ShowFile" asp-controller="Tickets" asp-route-Id="@item.Id">
+													<div class="icon">
+														<img src="@_fileService.GetFileIcon(item.FileName!)" style="height:50px;width:50px" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="@item.FileName" />
+													</div>
+												</a>
+												<div style="font-size:x-small">
+													<div class="file-name">
+														<strong>@item.Description</strong>
+													</div>
+													<small>Size: @_fileService.FormatFileSize(item.FileData!.Length) </small>
+												</div>
+											</div>
+										}
+									</div>
+								</div>
+
+							</div>
+							<div class="card-footer">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 col mt-5 ">
+				<div class="bg-dark">
+					<div class="card m-1 p-2">
+						<div class="card-header">
+							<h2>History</h2>
+							<hr />
+						</div>
+						<div class="card-body" style="overflow-y:auto;height:1000px;background-color:antiquewhite">
+							@*Loop to show the history entries for the Ticket*@
+							  @foreach( TicketHistory history in Model.History)
+                                {
+                                    <div class="">
+                                        <span class="date" style="font-weight:bold">@history.Created.ToString("dd MMMM yyyy")</span>
+                                        <h6>@history.Description</h6>
+                                        <span>By: <a href="" title="@history.User!.FullName"> @history.User.FullName</a></span>
+                                        <div class="">
+                                            @if(history.Description!.Contains("New Ticket Created"))
+                                            {
+                                                <p>A ticket was added</p>
+                                            }
+                                            else if(history.PropertyName!.Equals("TicketComment") || history.PropertyName.Equals("TicketAttachment"))
+                                            {
+                                                <p> A <b>@history.PropertyName</b> was added.</p>
+                                            }
+                                            else
+                                            {
+                                                <p> The ticket <b>@history.PropertyName</b> was edited</p>
+                                                <p>@($"Previous {history.PropertyName}: ")
+                                                    <span style="color:red"> @history.OldValue</span>
+                                                </p>
+                                                <p>
+                                                    @($"Current {history.PropertyName}: ")
+                                                    <span style="color:green"> @history.NewValue</span>
+                                                </p>
+                                            }
+							
+											
+						</div>
+					</div>
+								<hr />
+					}
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
