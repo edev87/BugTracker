@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - BugTacker</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-@*    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
-*@    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+@*   <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+*@   <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/BugTacker.styles.css" asp-append-version="true" />
 </head>
 <body>
@@ -14,40 +14,22 @@
    
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BugTracker</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+					<img src="~/img/1.png" alt="" width="80" height="80" class="d-inline-block align-text-top">
+
+					
+				</a>
+
+                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                <span> BugTracker</span>
+                </a>
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between" id="navbarNavDropdown">
-                 @*   <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Privacy</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Projects
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <li><a class="dropdown-item" href="#">Create</a></li>
-                                <li><a class="dropdown-item" href="#">Details</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Tickets
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <li><a class="dropdown-item" href="#">Create</a></li>
-                                <li><a class="dropdown-item" href="#">Details</a></li>
-                            </ul>
-                        </li>
-                    </ul>*@
-
-                    <ul class="navbar-nav flex-grow-1">
+                 <ul class="navbar-nav flex-grow-1">
                         @if (User.Identity!.IsAuthenticated)
                         {
                             <li class="nav-item">
@@ -103,6 +85,9 @@
             </div>
         </nav>
     </header>
+
+	@* Side bar*@
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()

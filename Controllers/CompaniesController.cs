@@ -113,7 +113,7 @@ namespace BugTracker.Controllers
             }
 
             // 6 - Navigate
-            return RedirectToAction(nameof(ManageUserRoles));
+            return RedirectToAction(nameof( ManageUserRoles));
         }
 
         // GET: Companies/Details/5

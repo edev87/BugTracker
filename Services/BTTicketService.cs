@@ -1,6 +1,7 @@
 ﻿using BugTracker.Data;
 using BugTracker.Models;
 using BugTracker.Services.Interfaces;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
 namespace BugTracker.Services
@@ -13,9 +14,20 @@ namespace BugTracker.Services
 			_context = context;
 		}
 
-		public Task AddTicketAsync(Ticket? ticket)
+		public async Task AddTicketAsync(Ticket? ticket)
 		{
-			throw new NotImplementedException();
+
+			if (ticket == null) { return; }
+			try
+			{
+				_context.Add(ticket);
+				await _context.SaveChangesAsync();
+			}
+			catch (Exception)
+			{
+
+				throw;
+			}
 		}
 
 		public async Task AddTicketAttachmentAsync(TicketAttachment? ticketAttachment)
@@ -164,10 +176,25 @@ namespace BugTracker.Services
 
 		public Task<BTUser?> GetTicketDeveloperAsync(int? ticketId, int? companyId)
 		{
-			throw new NotImplementedException();
-		}
+            throw new NotImplementedException();
 
-		public Task<IEnumerable<TicketPriority>> GetTicketPrioritiesAsync()
+            //if(ticketId == null || companyId == null)
+            //{
+            //	return null;
+            //}
+
+            //try
+            //{
+            //	BTUser developers = await _context.Tickets.Include( d => d.DeveloperUser)
+            //}
+            //catch (Exception)
+            //{
+
+            //	throw;
+            //}
+        }
+
+        public Task<IEnumerable<TicketPriority>> GetTicketPrioritiesAsync()
 		{
 			throw new NotImplementedException();
 		}

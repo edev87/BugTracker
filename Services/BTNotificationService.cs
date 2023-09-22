@@ -157,10 +157,11 @@ namespace BugTracker.Services
 					{
 						notification.Id = 0;
 						notification.RecipientId = adminId;
+						await _context.AddAsync(notification);
 					}
-					await _context.AddAsync(notification);
+
+					await _context.SaveChangesAsync();
 				}
-				await _context.SaveChangesAsync();
 			}
 			catch (Exception)
 			{
@@ -237,7 +238,7 @@ namespace BugTracker.Services
 					{
 						TicketId = ticketId,
 						Title = "Ticket Updated",
-						Message = $"Ticket: {ticket?.Title} was update by {btUser?.FullName}",
+						Message = $"Ticket: {ticket?.Title} was updated by {btUser?.FullName}",
 						Created = DataUtility.GetPostGresDate(DateTime.Now),
 						SenderId = senderId,
 						RecipientId = projectManager?.Id ?? senderId,

@@ -20,19 +20,22 @@ namespace BugTracker.Controllers
         private readonly IImageService _imageService;
         private readonly IBTProjectService _projectService;
         private readonly IBTRolesService _rolesService;
+		private readonly IBTTicketService _ticketService;
 
 
-        public ProjectsController(ApplicationDbContext context, UserManager<BTUser> userManager, IImageService imageService, IBTProjectService projectService, IBTRolesService rolesService)
-        {
-            _context = context;
-            _userManager = userManager;
-            _imageService = imageService;
-            _projectService = projectService;
-            _rolesService = rolesService;
-        }
 
-        // GET: Projects
-        public async Task<IActionResult> Index()
+		public ProjectsController(ApplicationDbContext context, UserManager<BTUser> userManager, IImageService imageService, IBTProjectService projectService, IBTRolesService rolesService, IBTTicketService ticketService)
+		{
+			_context = context;
+			_userManager = userManager;
+			_imageService = imageService;
+			_projectService = projectService;
+			_rolesService = rolesService;
+			_ticketService = ticketService;
+		}
+
+		// GET: Projects
+		public async Task<IActionResult> Index()
         {
             IEnumerable<Project> projects = await _projectService.GetAllProjectsByCompanyIdAsync(_companyId);
             return View(projects);
@@ -41,7 +44,7 @@ namespace BugTracker.Controllers
         // GET: Assign PM 
 
         [HttpGet]
-        public async Task<IActionResult> AssignPM(int? id)
+        public async Task<IActionResult> AssignProjectManager(int? id)
          {
             if(id == null)
             {
@@ -74,7 +77,7 @@ namespace BugTracker.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AssignPM(AssignPMViewModel viewModel)
+        public async Task<IActionResult> AssignProjectManager(AssignPMViewModel viewModel)
         {
             if (!string.IsNullOrEmpty(viewModel.PMId))
             {
@@ -186,6 +189,7 @@ namespace BugTracker.Controllers
             return View(project);
         }
 
+        //[]
         // GET: Projects/Create
         public IActionResult Create()
         {
@@ -208,7 +212,8 @@ namespace BugTracker.Controllers
             if (ModelState.IsValid)
             {
                 BTUser? user = await _userManager.GetUserAsync(User);
-                //set Company Id get  from user
+
+                //set Company Id, get from user
                 project.CompanyId = user!.CompanyId;
 
                 //Set Date

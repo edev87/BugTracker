@@ -154,10 +154,20 @@ namespace BugTracker.Services
         }
 
         #endregion
-        public Task AddProjectAsync(Project project)
+        public async Task AddProjectAsync(Project project)
         {
-            throw new NotImplementedException();
-        }
+			if (project == null) { return; }
+			try
+			{
+				_context.Add(project);
+				await _context.SaveChangesAsync();
+			}
+			catch (Exception)
+			{
+
+				throw;
+			}
+		}
 
         public async Task<bool> AddMemberToProjectAsync(BTUser? member, int? projectId)
         {
@@ -173,7 +183,7 @@ namespace BugTracker.Services
 
                         if (!isOnProject)
                         {
-                            project.Members.Remove(member);
+                            project.Members.Add(member);
                             await _context.SaveChangesAsync();
                             return true;
                         }

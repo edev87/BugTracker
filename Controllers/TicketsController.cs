@@ -15,6 +15,7 @@ using BugTracker.Data.Enums;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
 using BugTracker.Extensions;
+using BugTracker.Services;
 
 namespace BugTracker.Controllers
 {
@@ -27,22 +28,25 @@ namespace BugTracker.Controllers
 		private readonly IBTTicketService _ticketService;
         private readonly IBTTicketHistoryService _historyService;
         private readonly IBTNotificationService _notificationService;
+        private readonly IBTRolesService _rolesService;
 
 
 
-		public TicketsController(ApplicationDbContext context, UserManager<BTUser> userManager, IBTProjectService projectService, IBTFileService fileService, IBTTicketService ticketService, IBTTicketHistoryService historyService, IBTNotificationService bTNotificationService)
-		{
-			_context = context;
-			_userManager = userManager;
-			_projectService = projectService;
-			_fileService = fileService;
-			_ticketService = ticketService;
-			_historyService = historyService;
-			_notificationService = bTNotificationService;
-		}
 
-		// GET: Tickets
-		public async Task<IActionResult> Index()
+        public TicketsController(ApplicationDbContext context, UserManager<BTUser> userManager, IBTProjectService projectService, IBTFileService fileService, IBTTicketService ticketService, IBTTicketHistoryService historyService, IBTNotificationService bTNotificationService, IBTRolesService rolesSerivce)
+        {
+            _context = context;
+            _userManager = userManager;
+            _projectService = projectService;
+            _fileService = fileService;
+            _ticketService = ticketService;
+            _historyService = historyService;
+            _notificationService = bTNotificationService;
+            _rolesService = rolesSerivce;
+        }
+
+        // GET: Tickets
+        public async Task<IActionResult> Index()
         {
 
             //var applicationDbContext = _context.Tickets
@@ -62,6 +66,7 @@ namespace BugTracker.Controllers
             {
                 return NotFound();
             }
+
 
             AssignTicketViewModel viewModel = new();
 
@@ -225,6 +230,42 @@ namespace BugTracker.Controllers
 			return File(fileData, $"application/{ext}");
 		}
 
+        // GET: Assign Dev 
+
+        [HttpGet]
+        public async Task<IActionResult> AssignDeveloper(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Project? project = await _projectService.GetProjectByIdAsync(id, _companyId);
+
+            if (project == null)
+            {
+                return NotFound();
+            }
+
+            //Get list of developers
+            IEnumerable<BTUser> developers = await _rolesService
+                                                    .GetUsersInRoleAsync(nameof(BTRoles.Developer), _companyId);
+
+            //   BTUser? currentPM = await _ticketService.GetTicketDeveloperAsync(id);
+
+            //AssignPMViewModel viewModel = new()
+            //{
+            //    ProjectId = project.Id,
+            //    ProjectName = project.Name,
+            //    PMList = new SelectList(developers, "Id", "FullName", currentPM?.Id),
+            //    PMId = currentPM?.Id,
+            //};
+            return View();
+
+          //  return View(viewModel);
+        }
+
+        //POST Assign Dev
         [HttpPost]
         public async Task<IActionResult> AssignDeveloper(AssignTicketViewModel viewModel)
         {
@@ -278,7 +319,7 @@ namespace BugTracker.Controllers
                 int companyId = User.Identity!.GetCompanyId();
                 Ticket newTicket = await _ticketService.GetTicketAsNoTrackingAsync(ticket.Id, companyId);
 
-                await _historyService.AddHistoryAsync(null,newTicket,ticket.SubmitterUserId);
+                await _historyService.AddHistoryAsync(null!,newTicket,ticket.SubmitterUserId);
 
                 await _notificationService.NewTicketNotificationAsync(ticket.Id, ticket.SubmitterUserId);
 
@@ -434,7 +475,7 @@ namespace BugTracker.Controllers
                 return NotFound();
             }
 
-            ticket.ArchivedByProject = true;
+            ticket.Archived = true;
             await _ticketService.UpdateTicketAsync(ticket);
 
             return RedirectToAction(nameof(Index));
@@ -457,7 +498,7 @@ namespace BugTracker.Controllers
             {
                 return NotFound();
             }
-            ticket.ArchivedByProject = false;
+            ticket.Archived = false;
             await _ticketService.UpdateTicketAsync(ticket);
 
             return RedirectToAction(nameof(Index));

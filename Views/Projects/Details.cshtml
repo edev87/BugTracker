@@ -20,6 +20,7 @@
 
                     <div class="card col m-1 p-2">
                         <div class="body">
+							<strong>Project Name:</strong>
                             @* Project Name *@
                             <h5>@Model.Name</h5>
                             @* Project Description *@
@@ -75,8 +76,9 @@
                             <hr />
                         </div>
                         <div class="body" style="overflow-y:auto;height:300px;">
-                            [Project Manager]
-                            @((await _projectService.GetProjectManagerAsync(Model.Id))?.FullName)
+								
+								@((await _projectService.GetProjectManagerAsync(Model.Id))?.FullName)
+								[Project Manager]
                             @* if() logic for Avatar/Default etc *@
 
                         </div>
