@@ -9,7 +9,10 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+
+@* old Table*@
+
+@*<table class="table">
     <thead>
         <tr>
             <th>
@@ -64,12 +67,6 @@
                 @Html.DisplayFor(modelItem => item.EndDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ImageData)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImageType)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Archived)
             </td>
             <td>
@@ -89,4 +86,95 @@
         </tr>
 }
     </tbody>
-</table>
+</table>*@
+
+@*Old Table*@
+
+<div class="container-fluid">
+
+    <div class="col-md-12 col">
+        <div class="mt-5">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Projects</h5><span></span>
+                </div>
+                <div class="card custom-card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class=" table table-striped table-bordered text-nowrap" " id="basic-1">
+                                <thead class="">
+                                    <tr>
+                                        <th>
+                            @Html.DisplayNameFor(model => model.Name)
+                                        </th>
+                                        <th>
+                            @Html.DisplayNameFor(model => model.Created)
+                                        </th>
+                                        <th>
+                            @Html.DisplayNameFor(model => model.StartDate)
+                                        </th>
+                                        <th>
+                            @Html.DisplayNameFor(model => model.EndDate)
+                                        </th>
+                                        <th>
+                            @Html.DisplayNameFor(model => model.Archived)
+                                        </th>
+                                        <th>
+                            @Html.DisplayNameFor(model => model.Company)
+                                        </th>
+                                        <th>
+                            @Html.DisplayNameFor(model => model.ProjectPriority)
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                            @foreach (var item in Model)
+                            {
+                                        <tr>
+                                            <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                            </td>
+                                            <td>
+                                        @Html.DisplayFor(modelItem => item.Created)
+                                            </td>
+                                            <td>
+                                        @Html.DisplayFor(modelItem => item.StartDate)
+                                            </td>
+                                            <td>
+                                        @Html.DisplayFor(modelItem => item.EndDate)
+                                            </td>
+                                            <td>
+                                        @Html.DisplayFor(modelItem => item.Archived)
+                                            </td>
+                                            <td>
+                                        @Html.DisplayFor(modelItem => item.Company!.Name)
+                                            </td>
+                                            <td>
+                                        @Html.DisplayFor(modelItem => item.ProjectPriority!.Id)
+                                            </td>
+                                            <td>
+                                              <a class="btn btn-md bg-primary" asp-action="Archive" asp-route-id="@item.Id">Archive</a>   |
+                                                <a asp-action="Restore" asp-route-id="@item.Id">Restore</a> |
+                                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                                <a asp-action="AssignProjectManager" asp-route-id="@item.Id">Assign PM</a> |
+                                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                            </td>
+                                        </tr>
+                            }
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+
+

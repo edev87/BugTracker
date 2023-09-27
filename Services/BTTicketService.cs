@@ -2,6 +2,7 @@
 using BugTracker.Models;
 using BugTracker.Services.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 
 namespace BugTracker.Services
@@ -174,7 +175,51 @@ namespace BugTracker.Services
 			}
 		}
 
-		public Task<BTUser?> GetTicketDeveloperAsync(int? ticketId, int? companyId)
+		public async Task ArchiveProjectTicketsAsync(int? projectId)
+		{
+			try
+			{
+				IEnumerable<Ticket>? tickets = await _context.Tickets.Where(t => t.ProjectId == projectId).ToListAsync();
+
+				if (tickets != null)
+				{
+					foreach (Ticket ticket in tickets)
+					{
+						ticket.ArchivedByProject = true;
+					}
+				}
+				await _context.SaveChangesAsync();
+			}
+			catch (Exception)
+			{
+
+				throw;
+			}
+		}
+            public async Task RestoreProjectTicketsAsync(int? projectId)
+            {
+                try
+                {
+                    IEnumerable<Ticket>? tickets = await _context.Tickets.Where(t => t.ProjectId == projectId).ToListAsync();
+
+                    if (tickets != null)
+                    {
+                        foreach (Ticket ticket in tickets)
+                        {
+                            ticket.ArchivedByProject = false;
+                        }
+                    }
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+
+
+            public Task<BTUser?> GetTicketDeveloperAsync(int? ticketId, int? companyId)
 		{
             throw new NotImplementedException();
 

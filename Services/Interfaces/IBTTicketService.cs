@@ -24,6 +24,10 @@ namespace BugTracker.Services.Interfaces
         public Task ArchiveTicketAsync(Ticket? ticket);
         public Task RestoreTicketAsync(Ticket? ticket);
 
+        public Task ArchiveProjectTicketsAsync(int? projectId);
+
+        public Task RestoreProjectTicketsAsync(int? projectId);
+
 
 
 

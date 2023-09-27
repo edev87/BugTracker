@@ -197,10 +197,11 @@ namespace BugTracker.Controllers
             return View();
         }
 
-        // POST: Projects/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+		// POST: Projects/Create
+		// To protect from overposting attacks, enable the specific properties you want to bind to.
+		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+		[Authorize(Roles = "Admin,ProjectManager")]
+		[HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Description,Created,StartDate,EndDate,Selected,Archived,ProjectPriorityId")] Project project)
         {
@@ -262,12 +263,14 @@ namespace BugTracker.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,CompanyId,Name,Description,Created,StartDate,EndDate,ProjectPriorityId,ImageData,ImageType,Archived")] Project project)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,CompanyId,Name,Description,StartDate,EndDate,ProjectPriorityId,ImageData,ImageType,Archived")] Project project)
         {
             if (id != project.Id)
             {
                 return NotFound();
             }
+
+            ModelState.Remove("Created");
 
             if (ModelState.IsValid)
             {
@@ -276,6 +279,8 @@ namespace BugTracker.Controllers
                     BTUser? user = await _userManager.GetUserAsync(User);
                     //set Company Id get  from user
                     project.CompanyId = user!.CompanyId;
+
+                    project.Created = DateTime.Now;
 
                     //project.Updated
                     project.StartDate = DateTime.Now;
@@ -375,6 +380,11 @@ namespace BugTracker.Controllers
             project.Archived = true;
             await _projectService.UpdateProjectAsync(project);
 
+            //call new service to archive tickets of a project
+
+             await _ticketService.ArchiveProjectTicketsAsync(id);
+
+   
             return RedirectToAction(nameof(Index));
 
 
@@ -396,6 +406,10 @@ namespace BugTracker.Controllers
             }
             project.Archived = false;
             await _projectService.UpdateProjectAsync(project);
+
+            //call new service to restore tickets of a project
+
+            await _ticketService.ArchiveProjectTicketsAsync(id);
 
             return RedirectToAction(nameof(Index));
 

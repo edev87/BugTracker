@@ -15,6 +15,8 @@
             <input type="hidden" asp-for="Id" />
             <input type="hidden" asp-for="DeveloperUserId" />
             <input type="hidden" asp-for="SubmitterUserId" />
+            <input type="hidden" asp-for="Created" />
+            <input type="hidden" asp-for="Updated" />
 
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
@@ -25,16 +27,6 @@
                 <label asp-for="Description" class="control-label"></label>
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Created" class="control-label"></label>
-                <input asp-for="Created" class="form-control" />
-                <span asp-validation-for="Created" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Updated" class="control-label"></label>
-                <input asp-for="Updated" class="form-control" />
-                <span asp-validation-for="Updated" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">

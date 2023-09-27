@@ -14,13 +14,13 @@
 					<div class="card col m-1 p-2">
 						<div class="card-body">
 							
-                                <strong>Ticket Title:</strong>
-                                 <h5> @Model.Title</h5>
+                                <strong class="text-dark">Ticket Title:</strong>
+                            <h5 class="text-dark"> @Model.Title</h5>
                           
                          
 
                             @*Description of Ticket*@
-							<p> <strong>Ticket Description:</strong> @Model.Description</p>
+                            <p> <strong class="text-dark">Ticket Description:</strong> @Model.Description</p>
 							<div class="progress-container progress-info m-b-25">
 
 								@*Project Name and information*@
@@ -45,16 +45,16 @@
 						<div class="card-body">
 							<ul class="list-unstyled">
 								@*Ticket date*@
-								<li><strong>Date Entered:</strong> <span class="">  @Model?.Created </</span></li>
+                                    <li><strong class="text-dark">Date Entered:</strong> <span class="text-dark">  @Model?.Created </</span></li>
 								@*Project end date*@
-								<li><strong>Project Deadline:</strong> <span class="">  @Model?.Project?.EndDate </</span></li>
+                                    <li><strong class="text-dark">Project Deadline:</strong> <span class="text-dark">  @Model?.Project?.EndDate </</span></li>
 								@*Ticket type*@
-								<li><strong>Ticket Type:</strong> <span class="">  @Model?.TicketType?.Name </span></li>
+                                    <li><strong class="text-dark">Ticket Type:</strong> <span class="text-dark">  @Model?.TicketType?.Name </span></li>
 								@*Ticket priority*@
-								<li><strong>Ticket Priority:</strong> <span class=""> @Model?.TicketPriority?.Name</span></li>
+                                    <li><strong class="text-dark">Ticket Priority:</strong> <span class="text-dark"> @Model?.TicketPriority?.Name</span></li>
 								@*Ticket status*@
-								<li><strong>Ticket Status:</strong> <span class="">  @Model?.TicketStatus?.Name </span></li>
-							</ul>
+                                    <li><strong class="text-dark">Ticket Status:</strong> <span class="text-dark">  @Model?.TicketStatus?.Name </span></li>
+							</ul> 
 						</div>
 					</div>
 				</div>
@@ -66,21 +66,21 @@
                             <div class="bg-secondary">
                                 <div class="card m-1 p-2">
                                     <div class="card-header">
-                                        <h2>Comments</h2>
+                                        <h2 class="text-dark">Comments</h2>
                                     </div>
                                     <div class="card-body" style="overflow-y:auto;height:600px;">
 
                                         @if (User.Identity!.IsAuthenticated)
                                         {
                                             <div class="comment-respond">
-                                                <h4 class="title">Post a comment</h4>
+                                                <h4 class="titl text-dark">Post a comment</h4>
                                                 <form asp-action="AddTicketComment" asp-controller="Tickets">
                                                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                                     <input type="hidden" asp-for="Id" name="TicketId" />
                                                     <div class="row row-md-10">
                                                         <div class="col-12">
                                                             <div class="form-group">
-                                                                <label for="message">Leave a Reply</label>
+                                                                <label class="text-dark" for="message">Leave a Reply</label>
                                                                 <textarea id="editor" class="form-control" name="Comment"></textarea>
                                                             </div>
                                                         </div>
@@ -114,17 +114,17 @@
                                                                 <h6 class="commenter">
                                                                     <a class="hover-flip-item-wrapper" href="#">
                                                                         <span class="hover-flip-item">
-                                                                            <span data-text="@comment.User?.FullName">@comment.User?.FullName</span>
+                                                                            <span class="text-dark" data-text="@comment.User?.FullName">@comment.User?.FullName</span>
                                                                         </span>
                                                                     </a>
                                                                 </h6>
                                                                 <div class="comment-meta">
-                                                                    <div class="time-spent">@comment.Created.ToString("MMM dd, yyyy")</div>
+                                                                    <div class="time-spent text-dark">@comment.Created.ToString("MMM dd, yyyy")</div>
                                                                     <div class="reply-edit">
                                                                     </div>
                                                                 </div>
-                                                                <div class="comment-text">
-                                                                    <p class="b2">
+                                                                <div class="comment-text text-dark">
+                                                                    <p class="b2 text-dark">
                                                                         @Html.Raw(comment.Comment)
                                                                     </p>
                                                                 </div>
@@ -149,7 +149,7 @@
                             <div class="bg-secondary">
                                 <div class="card m-1 p-2">
                                     <div class="card-header">
-                                        <h2>Attachments</h2>
+                                        <h2 class="text-dark">Attachments</h2>
                                     </div>
                                     <div class="card-body" style="overflow-y:auto;height:300px;">
 
@@ -159,7 +159,7 @@
                                                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                                     <input type="hidden" asp-for="@Model.Id" name="TicketId">
                                                     <div class="media-body ml-3">
-                                                        <label>
+                                                        <label class="text-dark">
                                                             Description
                                                             <input name="Description" type="text" class="form-control" />
                                                         </label><br />
@@ -174,7 +174,7 @@
 
                                         <hr />
 
-                                        <h6>Attachments</h6>
+                                        <h6 class="text-dark">Attachments</h6>
                                         <div class="container">
                                             <div class="row">
                                                 @foreach (TicketAttachment item in Model.Attachments)
@@ -189,7 +189,7 @@
                                                             <div class="file-name">
                                                                 <strong>@item.Description</strong>
                                                             </div>
-                                                            <small>Size: @_fileService.FormatFileSize(item.FileData!.Length) </small>
+                                                            <small class="text-dark"> Size: @_fileService.FormatFileSize(item.FileData!.Length) </small>
                                                         </div>
                                                     </div>
                                                 }
@@ -209,34 +209,34 @@
                             <div class="bg-dark">
                                 <div class="card m-1 p-2">
                                     <div class="card-header">
-                                        <h2>History</h2>
+                                        <h2 class="text-dark">History</h2>
                                         <hr />
                                     </div>
                                     <div class="card-body" style="overflow-y:auto;height:1000px;background-color:antiquewhite">
                                         @*Loop to show the history entries for the Ticket*@
-                                        @foreach (TicketHistory history in Model.History)
+                                        @foreach (TicketHistory history in Model.History.OrderBy(h => h.Created))
                                         {
                                             <div class="">
-                                                <span class="date" style="font-weight:bold">@history.Created.ToString("dd MMMM yyyy")</span>
+                                                <span class="date text-dark" style="font-weight:bold">@history.Created.ToString("dd MMMM yyyy")</span>
                                                 <h6>@history.Description</h6>
-                                                <span>By: <a href="" title="@history.User!.FullName"> @history.User.FullName</a></span>
+                                                <span class="text-dark">By: <a class="text-dark" href="" title="@history.User!.FullName"> @history.User.FullName</a></span>
                                                 <div class="">
                                                     @if (history.Description!.Contains("New Ticket Created"))
                                                     {
-                                                        <p>A ticket was added</p>
+                                                        <p class="text-dark">A ticket was added</p>
                                                     }
                                                     else if (history.PropertyName!.Equals("TicketComment") || history.PropertyName.Equals("TicketAttachment"))
                                                     {
-                                                        <p> A <b>@history.PropertyName</b> was added.</p>
+                                                        <p class="text-dark"> A <b>@history.PropertyName</b> was added.</p>
                                                     }
                                                     else
                                                     {
-                                                        <p> The ticket <b>@history.PropertyName</b> was edited</p>
-                                                        <p>
+                                                        <p class="text-dark"> The ticket <b>@history.PropertyName</b> was edited</p>
+                                                        <p class="text-dark">
                                                             @($"Previous {history.PropertyName}: ")
                                                             <span style="color:red"> @history.OldValue</span>
                                                         </p>
-                                                        <p>
+                                                        <p class="text-dark">
                                                             @($"Current {history.PropertyName}: ")
                                                             <span style="color:green"> @history.NewValue</span>
                                                         </p>

@@ -32,6 +32,13 @@ namespace BugTracker.Services
                 Project? project = await _context.Projects
                      .Include(p => p.Company)
                      .Include(p => p.ProjectPriority)
+                     .Include(p => p.Tickets)
+                        .ThenInclude(t => t.History)
+                     .Include(p => p.Tickets)
+                        .ThenInclude(t => t.DeveloperUser)
+                     .Include(p => p.Tickets)
+                        .ThenInclude(t => t.SubmitterUser)
+                     .Include(p => p.Members)
                      .FirstOrDefaultAsync(m => m.Id == id);
 
                 return project!;

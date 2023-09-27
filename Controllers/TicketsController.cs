@@ -103,8 +103,14 @@ namespace BugTracker.Controllers
                 try
                 {
                     await _ticketService.AssignTicketAsync(viewModel.Ticket?.Id, viewModel.DeveloperId);
-                    
-                   return RedirectToAction(nameof(Details), new {id = viewModel.Ticket?.Id});
+
+                    // Add Ticket History
+                Ticket? newTicket = await _ticketService.GetTicketAsNoTrackingAsync(viewModel.Ticket?.Id, _companyId);
+
+                    await _historyService.AddHistoryAsync(oldTicket, newTicket, userId);
+
+
+                    return RedirectToAction(nameof(Details), new {id = viewModel.Ticket?.Id});
 
                 }
                 catch (Exception)
@@ -113,11 +119,7 @@ namespace BugTracker.Controllers
                     throw;
                 }
 
-                //Add Ticket History
-                Ticket? newTicket = await _ticketService.GetTicketAsNoTrackingAsync(viewModel.Ticket?.Id, _companyId);
                 
-                await _historyService.AddHistoryAsync(oldTicket, newTicket, userId);
-
 
                 //TODO: Add Notification (will add for create and edit as well)
             }
@@ -298,20 +300,17 @@ namespace BugTracker.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,Created,Updated,Archived,ProjectId,ArchivedByProject,TicketTypeId,TicketStatusId,TicketPriorityId,DeveloperUserId,SubmitterUserId")] Ticket ticket)
+        public async Task<IActionResult> Create([Bind("Id,Title,Description,Archived,ProjectId,ArchivedByProject,TicketTypeId,TicketStatusId,TicketPriorityId")] Ticket ticket)
         {
 
             ModelState.Remove("SubmitterUserId");
+          
 
             if (ModelState.IsValid)
             {
                 ticket.SubmitterUserId = _userManager.GetUserId(User);
                 ticket.Created = DateTime.Now;
-                ticket.Updated = DateTime.Now;
                 
-
-                _context.Add(ticket);
-
                 //call the ticket service
                 await _ticketService.AddTicketAsync(ticket);
 
@@ -323,7 +322,6 @@ namespace BugTracker.Controllers
 
                 await _notificationService.NewTicketNotificationAsync(ticket.Id, ticket.SubmitterUserId);
 
-                await _context.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
             }
@@ -362,7 +360,7 @@ namespace BugTracker.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Created,Updated,Archived,ProjectId,ArchivedByProject,TicketTypeId,TicketStatusId,TicketPriorityId,DeveloperUserId,SubmitterUserId")] Ticket ticket)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Archived,ProjectId,TicketTypeId,TicketStatusId,TicketPriorityId,DeveloperUserId,SubmitterUserId")] Ticket ticket)
         {
             if (id != ticket.Id)
             {
@@ -379,16 +377,16 @@ namespace BugTracker.Controllers
 
                     ticket!.SubmitterUserId = _userManager.GetUserId(User);
                     ticket.Created = DateTime.Now;
-                    ticket.Updated = DateTime.Now;
 
                     _context.Update(ticket);
+                    await _context.SaveChangesAsync();
 
                     //Add History
                     Ticket? newTicket = await _ticketService.GetTicketAsNoTrackingAsync(ticket.Id, _companyId);
                     await _historyService.AddHistoryAsync(oldTicket, newTicket, userId);
 
 
-                    await _context.SaveChangesAsync();
+                    
                  
                 }
                 catch (DbUpdateConcurrencyException)
