@@ -10,11 +10,9 @@
     <a asp-action="Create">Create New</a>
 </p>
 
-
-
 <div class="container-fluid">
 
-    <div class="col-lg-12 col">
+    <div class="col-md-12 col">
         <div class="mt-5">
             <div class="card">
                 <div class="card-header">
@@ -105,14 +103,7 @@
                                             <td>
                                         @Html.DisplayFor(modelItem => item.Invitee.Id)
                                             </td>
-                                            <td>
-                                                <a class="btn btn-md bg-primary" asp-action="Archive" asp-route-id="@item.Id">Archive</a>   |
-                                                <a asp-action="Restore" asp-route-id="@item.Id">Restore</a> |
-                                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                                                <a asp-action="AssignProjectManager" asp-route-id="@item.Id">Assign PM</a> |
-                                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                                            </td>
+                                           
                                         </tr>
                             }
                                 </tbody>

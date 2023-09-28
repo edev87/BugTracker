@@ -20,7 +20,13 @@ namespace BugTracker.Controllers
 
 
         [HttpGet]
-        public IActionResult LoadDashBoard()
+        public IActionResult DashBoard()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Landing()
         {
             return View();
         }

@@ -33,6 +33,12 @@
                         @if (User.Identity!.IsAuthenticated)
                         {
                             <li class="nav-item">
+                                <a class="nav-link active text-dark" asp-action="Dashboard" asp-controller="Home" aria-current="page">Dashboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active text-dark" asp-action="Landing" asp-controller="Home" aria-current="page">Landing</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link active text-dark" aria-current="page" >Home</a>
                             </li>
                             <li class="nav-item">
