@@ -54,7 +54,9 @@
                                     <li><strong class="text-dark">Ticket Priority:</strong> <span class="text-dark"> @Model?.TicketPriority?.Name</span></li>
 								@*Ticket status*@
                                     <li><strong class="text-dark">Ticket Status:</strong> <span class="text-dark">  @Model?.TicketStatus?.Name </span></li>
-							</ul> 
+                                    @*Ticket Archive Status*@
+@*                                    <li><strong class="text-dark">Ticket Archived:</strong> <span class="text-dark"> @{ @Model?.Archived ? "Archived" : "Not Archived" } </span></li>
+*@                                </ul> 
 						</div>
 					</div>
 				</div>

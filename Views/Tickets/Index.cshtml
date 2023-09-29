@@ -95,16 +95,16 @@
                                         @Html.DisplayFor(modelItem => item.TicketType!.Id)
                                             </td>*@
                                                 <td>
-                                        @Html.DisplayFor(modelItem => item.DeveloperUser!.Id)
+                                        @Html.DisplayFor(modelItem => item.DeveloperUser!.FullName)
                                             </td>
                                             <td>
-                                        @Html.DisplayFor(modelItem => item.SubmitterUser!.Id)
+                                        @Html.DisplayFor(modelItem => item.SubmitterUser!.FullName)
                                             </td>
                                             <td>
                                         @Html.DisplayFor(modelItem => item.TicketStatus!.Id)
                                             </td>
                                             <td>
-                                                <a asp-action="Archive" asp-route-id="@item.Id">Archive</a> |
+                                                <a asp-action="Archive" asp-cntroller="Tickets" asp-route-id="@item.Id">Archive</a> |
                                                 <a asp-action="Restore" asp-route-id="@item.Id">Restore</a> |
                                                 <a asp-action="AssignTicket" asp-route-id="@item.Id">Assign Developer To Ticket</a> |
                                                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

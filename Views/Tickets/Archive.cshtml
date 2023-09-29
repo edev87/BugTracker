@@ -8,7 +8,7 @@
 
 <label>Are you sure you want to archive this ticket?</label>
 <div>
- 
+
     <div class=" col-lg-6 ">
         <div class="card custom-card">
             <div class="card-body">
@@ -34,16 +34,16 @@
                     </div>
                     <div class="card-item-title mb-2">
                         <label class="main-content-label tx-13 font-weight-bold mb-1">
-                           @Model.Title
+                            @Model.Title
                         </label>
                         <span class="d-block tx-12 mb-0 text-muted">
-                          @Model.Created
+                            @Model.Created
                         </span>
                     </div>
                     <div class="card-item-body">
                         <div class="card-item-stat">
                             <h4 class="font-weight-bold"> @Model.Description</h4>
-                           
+
                         </div>
                     </div>
                 </div>
@@ -51,10 +51,10 @@
         </div>
     </div>
 
-    
+
     <form asp-action="post">
         <input type="hidden" asp-for="Id" />
-        <a class="btn btn-danger" asp-action="Archive" asp-controller="Tickets" asp-route-id="@Model.Id">  Archive </a> |
+        <a class="btn btn-danger" asp-action="Details" asp-controller="Tickets" asp-route-id="@Model.Id">  Archive </a> |
         <a asp-action="Details" asp-route-id="@Model.Id">Back to Ticket</a>
     </form>
 </div>

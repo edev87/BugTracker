@@ -458,8 +458,20 @@ namespace BugTracker.Controllers
           return (_context.Tickets?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
+        //[HttpGet]
+        //[Authorize(Roles = "Admin,ProjectManager")]
+        //public IActionResult Archive()
+        //{
+           
+
+        //    return View();
+
+
+        //}
+
+        [HttpGet]
         [Authorize(Roles = "Admin,ProjectManager")]
-        public async Task<IActionResult> Archive(int? id)
+        public async Task<IActionResult> Archive( int? id)
         {
             if (id == null || id == 0)
             {
@@ -476,7 +488,31 @@ namespace BugTracker.Controllers
             ticket.Archived = true;
             await _ticketService.UpdateTicketAsync(ticket);
 
-            return RedirectToAction(nameof(Index));
+           return View(ticket);
+
+
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin,ProjectManager")]
+        public async Task<IActionResult> ArchiveConfirmed(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            Ticket? ticket = await _ticketService.GetTicketByIdAsync(id, _companyId);
+
+            if (ticket == null)
+            {
+                return NotFound();
+            }
+
+            ticket.Archived = true;
+            await _ticketService.UpdateTicketAsync(ticket);
+
+            return RedirectToAction(nameof(Details));
 
 
         }
