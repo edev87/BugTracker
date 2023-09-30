@@ -385,7 +385,32 @@ namespace BugTracker.Controllers
              await _ticketService.ArchiveProjectTicketsAsync(id);
 
    
-            return RedirectToAction(nameof(Index));
+            return View(project);
+
+
+        }
+
+
+        [HttpPost]
+        [Authorize(Roles = "Admin,ProjectManager")]
+        public async Task<IActionResult> ArchiveConfirmed(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            Project? project = await _projectService.GetProjectByIdAsync(id, _companyId);
+
+            if (project == null)
+            {
+                return NotFound();
+            }
+
+            project.Archived = true;
+            await _projectService.UpdateProjectAsync(project);
+
+            return RedirectToAction(nameof(Details));
 
 
         }
@@ -409,7 +434,7 @@ namespace BugTracker.Controllers
 
             //call new service to restore tickets of a project
 
-            await _ticketService.ArchiveProjectTicketsAsync(id);
+            await _ticketService.RestoreProjectTicketsAsync(id);
 
             return RedirectToAction(nameof(Index));
 

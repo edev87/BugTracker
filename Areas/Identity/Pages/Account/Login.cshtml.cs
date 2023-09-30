@@ -108,22 +108,22 @@ namespace BugTracker.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/Home/Dashboard");
 
-            if (!string.IsNullOrEmpty(demoEmail))
-            {
-                string email = _configuration[demoEmail] ?? Environment.GetEnvironmentVariable(demoEmail);
-                string password = _configuration["DemoUserPassword"] ?? Environment.GetEnvironmentVariable("DemoUserPassword");
-                var result = await _signInManager.PasswordSignInAsync(email, password, false, lockoutOnFailure: false);
-                if (result.Succeeded)
-                {
-                    _logger.LogInformation("Demo User logged in.");
-                    return LocalRedirect(returnUrl);
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Invalid demo login attempt.");
-                    return Page();
-                }
-            }
+            //if (!string.IsNullOrEmpty(demoEmail))
+            //{
+            //    string email = _configuration[demoEmail] ?? Environment.GetEnvironmentVariable(demoEmail);
+            //    string password = _configuration["DemoUserPassword"] ?? Environment.GetEnvironmentVariable("DemoUserPassword");
+            //    var result = await _signInManager.PasswordSignInAsync(email, password, false, lockoutOnFailure: false);
+            //    if (result.Succeeded)
+            //    {
+            //        _logger.LogInformation("Demo User logged in.");
+            //        return LocalRedirect(returnUrl);
+            //    }
+            //    else
+            //    {
+            //        ModelState.AddModelError(string.Empty, "Invalid demo login attempt.");
+            //        return Page();
+            //    }
+            //}
 
             if (ModelState.IsValid)
             {

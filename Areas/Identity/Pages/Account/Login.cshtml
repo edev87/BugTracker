@@ -17,10 +17,10 @@
         <span class="tx-white-6 tx-13 mb-5 mt-xl-0">Signup to create, discover and connect with the global community</span>
         <hr />
         <hr />
-        <button class="btn btn-md bg-outline-warning" asp-action="Archive" >Demo Admin</button>
-        <button class="btn btn-md bg-primary" asp-action="Archive" >Demo ProjectManager</button>
-        <button class="btn btn-md bg-primary" asp-action="Archive" >Demo Developer</button>
-        <button class="btn btn-md bg-primary" asp-action="Archive" >Demo Submitter</button>
+        @*<button class="btn btn-md bg-outline-warning" name="demoAdminEmail" value="DemoAdminEmail" >Demo Admin</button>
+        <a class="btn btn-md bg-primary" name="demoPMEmail" value="DemoAdminEmail">Demo ProjectManager</a>
+        <button class="btn btn-md bg-primary" name="demoDevEmail" value="DemoAdminEmail">Demo Developer</button>
+        <button class="btn btn-md bg-primary" name="demoDevSubEmail" value="DemoAdminEmail">Demo Submitter</button>*@
     </div>
 </div>
 <div class="col-lg-6 col-xl-7 col-xs-12 col-sm-12 login_form">
@@ -40,7 +40,15 @@
                         <label asp-for="Input.Password"></label>
                         <input asp-for="Input.Password" class="form-control" placeholder="Enter your password">
                     </div>
-                    <button id="login-submit" type="submit" class="btn ripple btn-main-primary btn-block">Sign In</button>
+                    <div class="form-group">
+                        <button id="login-submit" type="submit" class="btn ripple btn-main-primary btn-block mb-4">Sign In</button>
+                        <button type="submit" class="btn btn-md bg-primary" name="demoAdminEmail" value="DemoAdminEmail">Demo Admin</button>
+                        <a class="btn btn-md bg-primary" name="demoPMEmail" value="DemoAdminEmail">Demo ProjectManager</a>
+                        <button class="btn btn-md bg-primary" name="demoDevEmail" value="DemoAdminEmail">Demo Developer</button>
+                        <button class="btn btn-md bg-primary mt-4" name="demoDevSubEmail" value="DemoAdminEmail">Demo Submitter</button>
+
+                    </div>
+                   
                 </form>
                 <div class="text-start mt-5 ms-0">
                     <div class="mb-1"><a id="forgot-password" asp-page="./ForgotPassword">Forgot password?</a></div>
