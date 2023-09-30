@@ -377,12 +377,12 @@ namespace BugTracker.Controllers
                 return NotFound();
             }
 
-            project.Archived = true;
-            await _projectService.UpdateProjectAsync(project);
+          //  project.Archived = true;
+        //    await _projectService.UpdateProjectAsync(project);
 
             //call new service to archive tickets of a project
 
-             await _ticketService.ArchiveProjectTicketsAsync(id);
+          //   await _ticketService.ArchiveProjectTicketsAsync(id);
 
    
             return View(project);
@@ -409,14 +409,43 @@ namespace BugTracker.Controllers
 
             project.Archived = true;
             await _projectService.UpdateProjectAsync(project);
+            await _ticketService.ArchiveProjectTicketsAsync(id);
 
             return RedirectToAction(nameof(Details));
 
 
         }
 
+        [HttpGet]
         [Authorize(Roles = "Admin,ProjectManager")]
         public async Task<IActionResult> Restore(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            Project? project = await _projectService.GetProjectByIdAsync(id, _companyId);
+
+            if (project == null)
+            {
+                return NotFound();
+            }
+      //      project.Archived = false;
+        //    await _projectService.UpdateProjectAsync(project);
+
+            //call new service to restore tickets of a project
+
+       //     await _ticketService.RestoreProjectTicketsAsync(id);
+
+            return View(project);
+
+        }
+
+
+        [HttpGet]
+        [Authorize(Roles = "Admin,ProjectManager")]
+        public async Task<IActionResult> RestoreArchived(int? id)
         {
             if (id == null || id == 0)
             {
@@ -436,7 +465,7 @@ namespace BugTracker.Controllers
 
             await _ticketService.RestoreProjectTicketsAsync(id);
 
-            return RedirectToAction(nameof(Index));
+            return View(nameof(Details));
 
         }
     }
