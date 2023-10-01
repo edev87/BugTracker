@@ -65,7 +65,7 @@
                     <div class="card custom-card col m-1 p-2">
 
                         <div class="body">
-                                    <a class="badge bg-dark" href="#">Project Status</a>
+                                    <span class="badge bg-dark">Project Status</span>
                                     <br />
                             <div class="mt-3 mb-2 progress-container progress-info m-b-25">
                                       
@@ -126,7 +126,7 @@
 
                                         <label style="font-size:small" class="main-content-label mb-2">
                                             @((await _projectService.GetProjectManagerAsync(Model.Id))?.FullName) </label>
-                                        <span class="badge bg-pill bg-info" style="font-size:medium">
+                                        <span class="badge bg-pill bg-info" style="font-size:small">
                                             Project Manager
                                             </span>
                             @* if() logic for Avatar/Default etc *@
@@ -162,7 +162,7 @@
                                                             <label style="font-size:small" class="main-content-label mb-2">
                                                                 @member.FullName
                                                             </label>
-                                                            <span class="badge bg-pill bg-info" style="font-size:medium">
+                                                            <span class="badge bg-pill bg-info" style="font-size:small">
                                                                 @(string.Join(",", await _UserManager.GetRolesAsync(member))) </span>
 												</div>
 											</li>
@@ -180,45 +180,50 @@
             <div class="col-md-4 col mt-5 ">
                 <div >
                     <div class="card m-1 p-2">
-                        <div class="header">
-                                        <label style="font-size:small" class="main-content-label mb-2">
-                                            Project Activity
-                                        </label>
-                            <hr />
-                        </div>
-                        <div class="body text-dark rounded p-2" style="overflow-y:auto;height:300px;background-color:lightcoral ">
-                            @* Project Activity loop *@
-                                @foreach( TicketHistory history in Model.Tickets.SelectMany(t => t.History).OrderBy(h => h.Created))
-                                {
-                                    <div class="">
-                                        <span class="date" style="font-weight:bold">@history.Created.ToString("dd MMMM yyyy")</span>
-                                        <h6>@history.Description</h6>
-                                        <span>By: <a href="" title="@history.User!.FullName"> @history.User.FullName</a></span>
-                                        <div class="">
-                                            @if(history.Description!.Contains("New Ticket Created"))
+                        <div class="card-body">
+                                        <div class="header">
+                                            <label style="font-size:small" class="main-content-label mb-2">
+                                                Project Activity
+                                            </label>
+                                            <hr />
+                                        </div>
+                                        <div class="body text-dark rounded p-2" style="overflow-y:auto;height:300px;background-color:lightcoral ">
+                                            @* Project Activity loop *@
+                                            @foreach (TicketHistory history in Model.Tickets.SelectMany(t => t.History).OrderBy(h => h.Created))
                                             {
-                                                <p>A ticket was added</p>
-                                            }
-                                            else if(history.PropertyName!.Equals("TicketComment") || history.PropertyName.Equals("TicketAttachment"))
-                                            {
-                                                <p> A <b>@history.PropertyName</b> was added.</p>
-                                            }
-                                            else
-                                            {
-                                                <p> The ticket <b>@history.PropertyName</b> was edited</p>
-                                                <p>@($"Previous {history.PropertyName}: ")
-                                                    <span style="color:red"> @history.OldValue</span>
-                                                </p>
-                                                <p>
-                                                    @($"Current {history.PropertyName}: ")
-                                                    <span style="color:green"> @history.NewValue</span>
-                                                </p>
+                                                <div class="">
+                                                    <span class="date" style="font-weight:bold">@history.Created.ToString("dd MMMM yyyy")</span>
+                                                    <h6>@history.Description</h6>
+                                                    <span>By: <a href="" title="@history.User!.FullName"> @history.User.FullName</a></span>
+                                                    <div class="">
+                                                        @if (history.Description!.Contains("New Ticket Created"))
+                                                        {
+                                                            <p>A ticket was added</p>
+                                                        }
+                                                        else if (history.PropertyName!.Equals("TicketComment") || history.PropertyName.Equals("TicketAttachment"))
+                                                        {
+                                                            <p> A <b>@history.PropertyName</b> was added.</p>
+                                                        }
+                                                        else
+                                                        {
+                                                            <p> The ticket <b>@history.PropertyName</b> was edited</p>
+                                                            <p>
+                                                                @($"Previous {history.PropertyName}: ")
+                                                                <span style="color:red"> @history.OldValue</span>
+                                                            </p>
+                                                            <p>
+                                                                @($"Current {history.PropertyName}: ")
+                                                                <span style="color:green"> @history.NewValue</span>
+                                                            </p>
+                                                        }
+                                                    </div>
+                                                </div>
                                             }
                                         </div>
-                                        </div>
-                                }
-                            </div>
 
+
+                        </div>
+                      
                     </div>
                 </div>
             </div>

@@ -266,9 +266,19 @@ namespace BugTracker.Services
             
         }
 
-        public Task<List<Project>> GetArchivedProjectsByCompanyIdAsync(int? companyId)
+        public async Task<IEnumerable<Project>> GetArchivedProjectsByCompanyIdAsync(int? companyId)
         {
-            throw new NotImplementedException();
+            try
+            {
+               IEnumerable<Project> project =  await _context.Projects.Where( p => p.CompanyId == companyId).Include(p => p.Archived).ToListAsync();
+                return project;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public async Task<List<BTUser>> GetProjectMembersByRoleAsync(int? projectId, string? roleName, int? companyId)
@@ -439,6 +449,8 @@ namespace BugTracker.Services
                 throw;
             }
         }
+
+       
     }
 
     }

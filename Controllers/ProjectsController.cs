@@ -468,5 +468,22 @@ namespace BugTracker.Controllers
             return View(nameof(Details));
 
         }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin,ProjectManager")]
+        public async Task<IActionResult> ArchivedProjects(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+           IEnumerable<Project>? project = await _projectService.GetArchivedProjectsByCompanyIdAsync( _companyId);
+
+            
+
+            return View(project);
+
+        }
     }
 }

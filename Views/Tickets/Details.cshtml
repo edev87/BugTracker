@@ -10,17 +10,23 @@
 	<div class ="xfont-weighteighteightgetainer-fluid">
 		<div class="row gy-2">
 			<div class="col-md-12 col">
-				<div class="row col-cols-2 mt-5 bg-secondary">
-					<div class="card col m-1 p-2">
+				<div class="row col-cols-2 mt-5">
+                    <div class="card custom-card col m-1 p-2">
 						<div class="card-body">
-							
-                                <strong class="text-dark">Ticket Title:</strong>
+
+                            <label class="main-content-label mb-2" style="font-size:medium">Ticket Title</label>
                             <h5 class="text-dark"> @Model.Title</h5>
-                          
-                         
+
+                            <div class="list-card">
+                                <p class="text-dark">   
+                                    <span style="font-size:medium" class="d-block tx-12 mb-2 text-muted">Ticket Description:</span>
+                                    @Model.Description
+                                    </p>
+
+
+                            </div>
 
                             @*Description of Ticket*@
-                            <p> <strong class="text-dark">Ticket Description:</strong> @Model.Description</p>
 							<div class="progress-container progress-info m-b-25">
 
 								@*Project Name and information*@
@@ -45,15 +51,15 @@
 						<div class="card-body">
 							<ul class="list-unstyled">
 								@*Ticket date*@
-                                    <li><strong class="text-dark">Date Entered:</strong> <span class="text-dark">  @Model?.Created </</span></li>
+                                    <li> <span class="badge bg-pill bg-light">Date Entered:</span> <span class="badge bg-dark">  @Model?.Created </</span></li>
 								@*Project end date*@
-                                    <li><strong class="text-dark">Project Deadline:</strong> <span class="text-dark">  @Model?.Project?.EndDate </</span></li>
+                                    <li><span class="badge bg-pill bg-light">Project Deadline:</span> <span class="badge bg-dark">  @Model?.Project?.EndDate </</span></li>
 								@*Ticket type*@
-                                    <li><strong class="text-dark">Ticket Type:</strong> <span class="text-dark">  @Model?.TicketType?.Name </span></li>
-								@*Ticket priority*@
-                                    <li><strong class="text-dark">Ticket Priority:</strong> <span class="text-dark"> @Model?.TicketPriority?.Name</span></li>
-								@*Ticket status*@
-                                    <li><strong class="text-dark">Ticket Status:</strong> <span class="text-dark">  @Model?.TicketStatus?.Name </span></li>
+                                    <li><span class="badge bg-pill bg-primary">Ticket Type:</span> <span class="badge bg-dark">  @Model?.TicketType?.Name </span></li>
+								@*Ticket ppanty*@
+                                    <li><span class="badge bg-pill bg-danger">Ticket Priority:</span> <span class="badge bg-dark"> @Model?.TicketPriority?.Name</span></li>
+								@*Ticket span*@
+                                    <li><span class="badge bg-pill bg-success">Ticket Status:</span> <span class="badge bg-dark"><span class="text-dark">  @Model?.TicketStatus?.Name </span></li>
                                     @*Ticket Archive Status*@
 @*                                    <li><strong class="text-dark">Ticket Archived:</strong> <span class="text-dark"> @{ @Model?.Archived ? "Archived" : "Not Archived" } </span></li>
 *@                                </ul> 
@@ -63,12 +69,13 @@
 			</div>
 			<div class="col-md-12 col col-cols-2 mt-5 ">
 				<div class="row">
+
                     @*Comments*@
                         <div class="col">
-                            <div class="bg-secondary">
+                            <div class="">
                                 <div class="card m-1 p-2">
                                     <div class="card-header">
-                                        <h2 class="text-dark">Comments</h2>
+                                        <label style="font-size:small" class="main-content-label mb-2">Comments</label>
                                     </div>
                                     <div class="card-body" style="overflow-y:auto;height:600px;">
 
@@ -89,7 +96,7 @@
                                                     </div>
                                                     <div class="col-lg-12">
                                                         <div class="form-submit cerchio">
-                                                            <input name="submit" type="submit" id="submit" class="axil-button button-rounded" value="Post Comment">
+                                                            <button type="submit" class="btn btn-outline-success btn-sm md-btn-flat">Post Comment</button>
                                                         </div>
                                                     </div>
                                                 </form>
@@ -148,10 +155,10 @@
 
                         @*Ticket Attachments*@
                         <div class="col">
-                            <div class="bg-secondary">
+                            <div>
                                 <div class="card m-1 p-2">
                                     <div class="card-header">
-                                        <h2 class="text-dark">Attachments</h2>
+                                        <label style="font-size:small" class="main-content-label mb-2">Attachments</label>
                                     </div>
                                     <div class="card-body" style="overflow-y:auto;height:300px;">
 
@@ -161,7 +168,7 @@
                                                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                                     <input type="hidden" asp-for="@Model.Id" name="TicketId">
                                                     <div class="media-body ml-3">
-                                                        <label class="text-dark">
+                                                        <label style="font-size:small" class="main-content-label mb-2">
                                                             Description
                                                             <input name="Description" type="text" class="form-control" />
                                                         </label><br />
@@ -176,7 +183,7 @@
 
                                         <hr />
 
-                                        <h6 class="text-dark">Attachments</h6>
+                                        <label style="font-size:small" class="main-content-label mb-2">Attachments</label>
                                         <div class="container">
                                             <div class="row">
                                                 @foreach (TicketAttachment item in Model.Attachments)
@@ -208,20 +215,22 @@
 
                         @*Ticket History*@
                         <div class="col-lg-4 col-sm-12">
-                            <div class="bg-dark">
+                            <div class="">
                                 <div class="card m-1 p-2">
                                     <div class="card-header">
-                                        <h2 class="text-dark">History</h2>
+                                        <label style="font-size:small" class="main-content-label mb-2">History</label>
                                         <hr />
                                     </div>
-                                    <div class="card-body" style="overflow-y:auto;height:1000px;background-color:antiquewhite">
+                                    <div class="card-body rounded" style="overflow-y:auto;height:1000px;background-color: lightyellow">
                                         @*Loop to show the history entries for the Ticket*@
                                         @foreach (TicketHistory history in Model.History.OrderBy(h => h.Created))
                                         {
                                             <div class="">
+                                                <div class="card col m-1 p-2">
+                                                    <div class="card-body">
                                                 <span class="date text-dark" style="font-weight:bold">@history.Created.ToString("dd MMMM yyyy")</span>
                                                 <h6>@history.Description</h6>
-                                                <span class="text-dark">By: <a class="text-dark" href="" title="@history.User!.FullName"> @history.User.FullName</a></span>
+                                                <span class="text-dark">By: <a class="ml-2 text-dark" href="" title="@history.User!.FullName"> @history.User.FullName</a></span>
                                                 <div class="">
                                                     @if (history.Description!.Contains("New Ticket Created"))
                                                     {
@@ -236,15 +245,17 @@
                                                         <p class="text-dark"> The ticket <b>@history.PropertyName</b> was edited</p>
                                                         <p class="text-dark">
                                                             @($"Previous {history.PropertyName}: ")
-                                                            <span style="color:red"> @history.OldValue</span>
+                                                            <span style="color:peru"> @history.OldValue</span>
                                                         </p>
                                                         <p class="text-dark">
                                                             @($"Current {history.PropertyName}: ")
-                                                            <span style="color:green"> @history.NewValue</span>
+                                                            <span style="color:black"> @history.NewValue</span>
                                                         </p>
                                                     }
 
 
+                                                </div>
+                                                </div>
                                                 </div>
                                             </div>
                                             <hr />
