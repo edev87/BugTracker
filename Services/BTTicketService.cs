@@ -112,7 +112,32 @@ namespace BugTracker.Services
 
         }
 
-		public async Task<Ticket> GetTicketAsNoTrackingAsync(int? ticketId, int? companyId)
+        public async Task<List<Ticket>> GetAllArchivedTicketsByCompanyIdAsync(int? companyId)
+        {
+            try
+            {
+                List<Ticket> tickets = await _context.Projects
+                                      .Where(t => t.CompanyId == companyId)
+                                      .Include(p => p.Tickets)
+                                          .ThenInclude(t => t.Comments)
+                                          .Include(p => p.Tickets)
+                                              .ThenInclude(t => t.Attachments)
+                                              .Include(p => p.Tickets)
+                                              .ThenInclude(t => t.History)
+                                      .SelectMany(p => p.Tickets)
+                                      .ToListAsync();
+
+				return tickets;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<Ticket> GetTicketAsNoTrackingAsync(int? ticketId, int? companyId)
 		{
 			try
 			{

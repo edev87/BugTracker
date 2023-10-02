@@ -1,0 +1,152 @@
+﻿@using BugTracker.Data.Enums;
+@model IEnumerable<BugTracker.Models.Ticket>
+@inject IBTProjectService _projectService
+@inject UserManager<BTUser> _UserManager
+
+@{
+    ViewData["Title"] = "Index";
+  
+    BTUser? btUser = await _UserManager.GetUserAsync(User);
+   // BTUser? projectManager = await _projectService.GetProjectManagerAsync(Model);
+
+    
+}
+
+
+
+<div class="xfont-weighteighteightgetainer-fluid">
+    <div class="row gy-2">
+        <div class="col-md-12 col">
+            <div class="row col-cols-2 mt-5">
+                <div class="card custom-card col m-1 p-2">
+                    <div class="card-body">
+
+                        <label class="main-content-label mb-2 mt-2" style="font-size:medium">
+                            Archived Tickets
+                        </label>
+
+
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+
+
+<div class="container-fluid">
+  
+
+    <div class="col-md-12 col">
+        <div class="mt-5">
+            <div class="card">
+                <div class="card-header">
+@*                    <h5> Archived Tickets</h5><span></span>
+*@                </div>
+                <div class="card custom-card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped" id="example2">
+                                <thead class="">
+                                    <tr>
+                                           <th>
+                                        ID
+                                        </th>
+                                        <th>
+                                        Project
+                                        </th>
+                                        <th>
+                            @Html.DisplayNameFor(model => model.Title)
+                                        </th>
+                                   @*     <th>
+                            @Html.DisplayNameFor(model => model.Created)
+                                        </th>
+                                        <th>
+                            @Html.DisplayNameFor(model => model.Archived)
+                                        </th>
+                                        <th>
+                            @Html.DisplayNameFor(model => model.ArchivedByProject)
+                                        </th>
+                                        <th>
+                            @Html.DisplayNameFor(model => model.TicketPriority)
+                                        </th>
+                                        <th>
+                            @Html.DisplayNameFor(model => model.TicketType)
+                                        </th>*@
+                                        <th>
+                            @Html.DisplayNameFor(model => model.DeveloperUser)
+                                        </th>
+                                        <th>
+                            @Html.DisplayNameFor(model => model.SubmitterUser)
+                                        </th>
+                                        <th>
+                            @Html.DisplayNameFor(model => model.TicketStatus)
+                                        </th>
+                                   
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                            @foreach (var item in Model)
+                            {
+                                        <tr>
+                                              <td>
+                                        @Html.DisplayFor(modelItem => item.Id)
+                                            </td>
+                                            <td>
+                                        @Html.DisplayFor(modelItem => item.Title)
+                                            </td>
+                                            <td>
+                                     @*   @Html.DisplayFor(modelItem => item.Created)
+                                            </td>
+                                               <td>
+                                        @Html.DisplayFor(modelItem => item.Archived)
+                                            </td>
+                                               <td>
+                                        @Html.DisplayFor(modelItem => item.ArchivedByProject)
+                                            </td>
+                                            <td>
+                                        @Html.DisplayFor(modelItem => item.TicketPriority!.Id)
+                                            </td>
+                                            <td>
+                                        @Html.DisplayFor(modelItem => item.TicketType!.Id)
+                                            </td>*@
+                                                <td>
+                                        @Html.DisplayFor(modelItem => item.DeveloperUser!.FullName)
+                                            </td>
+                                            <td>
+                                        @Html.DisplayFor(modelItem => item.SubmitterUser!.FullName)
+                                            </td>
+                                            <td>
+                                        @Html.DisplayFor(modelItem => item.TicketStatus!.Id)
+                                            </td>
+                                            <td>
+                                            @if (item.Archived == true)
+                                            {
+                                                    <a class="btn btn-md bg-success" asp-action="Restore" asp-route-id="@item.Id">Restore</a>
+                                            }
+                                            else
+                                            {
+                                                    <a class="btn btn-md bg-danger" asp-action="Archive" asp-route-id="@item.Id">Archive</a>
+                                            }
+
+                                                |
+                                                <a class="btn btn-md bg-primary" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                                <a class="btn btn-md bg-info" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                                <a class="btn btn-md bg-warning" asp-action="AssignTicket" asp-route-id="@item.Id">Assign Developer To Ticket</a> 
+                                            </td>
+                                        </tr>
+                            }
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+

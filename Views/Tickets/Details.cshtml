@@ -3,8 +3,8 @@
 @inject IBTFileService _fileService
 @inject IImageService _ImageService
 
-<h1>Ticket Details</h1>
-<h4>@Model.DeveloperUser?.FullName</h4>
+
+<h4> <span class="badge bg-pill bg-light"> Assigned Developer:</span> @Model.DeveloperUser?.FullName</h4>
 
 <div>
 	<div class ="xfont-weighteighteightgetainer-fluid">
@@ -278,7 +278,7 @@
 </div>
 
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model?.Id"><span class="badge bg-success">Edit</span></a>  |
+    <a asp-action="Index"><span class="badge bg-dark">  Back to Ticket List </</span></a>
 </div>
 

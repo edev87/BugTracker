@@ -96,11 +96,11 @@
                                             <li><span class="badge bg-pill bg-danger">Priority:</span> <span class="badge bg-dark">@Model.ProjectPriority?.Name</span></li>
                                     @if(today < end && today >= start)
                                     {
-                                                <li class="text-dark p-1"><span class="badge bg-pill bg-primary">Status:</span> <span class="badge bg-dark">Active</span></li>
+                                                <li class="text-dark p-1"><span class="badge bg-pill bg-primary">Status:</span> <span class="badge bg-dark text-white">Active</span></li>
                                     }
                                     else
                                     {
-                                                <li class="text-dark p-1"><span class="badge bg-pill bg-primary">Status:</span> <span class="badge bg-dark">InActive</span></li>
+                                                <li class="text-dark p-1"><span class="badge bg-pill bg-primary">Status:</span> <span class="badge bg-dark text-white">InActive</span></li>
                                     }
                                   
                     </ul>
@@ -311,6 +311,6 @@
     </div>
 
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model?.Id"><span class="badge bg-success">Edit</span></a> |
+    <a asp-action="Index"><span class="badge bg-dark">  Back to Project List </</span></a>
 </div>

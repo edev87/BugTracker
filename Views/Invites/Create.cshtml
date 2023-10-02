@@ -4,12 +4,8 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
 
-<h4>Invite</h4>
-<hr />
-
-<div class="col-lg-6 col-md-12">
+<div class="col-lg-6 col-md-12 mt-3">
     <div class="card custom-card">
         <div class="card-body">
             <div>
@@ -61,8 +57,10 @@
                 </div>
                 <div class="form-group row justify-content-end mb-0">
                     <div class="col-md-8 pl-md-2">
-                        <a asp-action="Create" asp-controller="Invites">  <input type="submit" class="btn ripple btn-primary pd-x-30 mg-r-5" value="Send Invite" /></a>
-                        <button class="btn ripple btn-secondary pd-x-30">Cancel</button>
+                        
+                            <button type="submit" class="btn ripple btn-primary pd-x-30 mg-r-5"> Send Invite<i class="pe-7s-paper-plane p-2"></i></button>
+
+                        <button class="btn ripple btn-secondary pd-x-30 p-3">Cancel</button>
                     </div>
                 </div>
             </form>
@@ -71,7 +69,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index"><span class="badge bg-dark"> Back to List</a>
 </div>
 
 @section Scripts {

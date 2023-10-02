@@ -4,9 +4,10 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
 
-<h4>Ticket</h4>
+<label class="main-content-label mb-2 mt-2" style="font-size:medium">
+    Create Ticket <i class="si si-plus p-1"></i>
+</label>
 <hr />
 <div class="row">
 
@@ -87,7 +88,7 @@
 
                         <div class="form-group row justify-content-end mb-0">
                             <div class="col-md-8 ps-md-2">
-                                <input type="submit" value="Create" class="btn btn-primary" />
+                                <button type="submit" class="btn btn-md bg-primary"> Create <i class="si si-plus p-1"></i> </button>
                             </div>
                         </div>
                        </div>
@@ -102,7 +103,7 @@
 
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index"><span class="badge bg-dark">  Back to Ticket List </</span></a>
 </div>
 
 @section Scripts {

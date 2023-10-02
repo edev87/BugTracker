@@ -270,7 +270,7 @@ namespace BugTracker.Services
         {
             try
             {
-               IEnumerable<Project> project =  await _context.Projects.Where( p => p.CompanyId == companyId).Include(p => p.Archived).ToListAsync();
+               IEnumerable<Project> project =  await _context.Projects.Where( p => p.CompanyId == companyId && p.Archived == true).ToListAsync();
                 return project;
 
             }

@@ -43,6 +43,7 @@ namespace BugTracker.Controllers
 
         // GET: Assign PM 
 
+        [Authorize(Roles ="Admin")]
         [HttpGet]
         public async Task<IActionResult> AssignProjectManager(int? id)
          {
@@ -104,6 +105,7 @@ namespace BugTracker.Controllers
             return View(viewModel);
         }
 
+        [Authorize(Roles = "Admin,ProjectManager")]
         [HttpGet]
         public async Task<IActionResult> AssignProjectMembers(int? id)
         {
@@ -138,6 +140,7 @@ namespace BugTracker.Controllers
                 return View(viewModel);
         }
 
+        [Authorize(Roles = "Admin,ProjectManager")]
         [HttpPost]
         public async Task<IActionResult> AssignProjectMembers(ProjectMembersViewModel viewModel)
         {
@@ -169,6 +172,7 @@ namespace BugTracker.Controllers
         }
 
 
+        [Authorize(Roles = "Admin,ProjectManager")]
 
         // GET: Projects/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -189,7 +193,7 @@ namespace BugTracker.Controllers
             return View(project);
         }
 
-        //[]
+        [Authorize(Roles = "Admin,ProjectManager")]
         // GET: Projects/Create
         public IActionResult Create()
         {
@@ -240,6 +244,8 @@ namespace BugTracker.Controllers
             return View(project);
         }
 
+        [Authorize(Roles = "Admin,ProjectManager")]
+
         // GET: Projects/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -261,6 +267,7 @@ namespace BugTracker.Controllers
         // POST: Projects/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin,ProjectManager")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,CompanyId,Name,Description,StartDate,EndDate,ProjectPriorityId,ImageData,ImageType,Archived")] Project project)
@@ -471,12 +478,9 @@ namespace BugTracker.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Admin,ProjectManager")]
-        public async Task<IActionResult> ArchivedProjects(int? id)
+        public async Task<IActionResult> ArchivedProjects()
         {
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
+    
 
            IEnumerable<Project>? project = await _projectService.GetArchivedProjectsByCompanyIdAsync( _companyId);
 

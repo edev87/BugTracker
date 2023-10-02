@@ -8,9 +8,11 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
 
-<h4>Project</h4>
+<label class="main-content-label mb-2 mt-2" style="font-size:medium">
+    Create Project <i class="si si-plus p-1"></i>
+</label>
+
 <hr />
 
 <div class="row row-sm">
@@ -99,7 +101,9 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <div>
+        <a asp-action="Index"><span class="badge bg-dark">  Back to Project List </</span></a>
+    </div>
 </div>
 
 @section Scripts {

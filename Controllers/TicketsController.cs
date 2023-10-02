@@ -144,6 +144,7 @@ namespace BugTracker.Controllers
         }
 
 
+        [Authorize(Roles = "Admin")]
         // GET: Tickets/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -170,6 +171,7 @@ namespace BugTracker.Controllers
 
             return View(ticket);
         }
+        [Authorize(Roles = "Admin")]
         //POST
         [HttpPost]
         public async Task<IActionResult> AddTicketComment([Bind("UserId, TicketId, Comment")] TicketComment ticketComment)
@@ -191,8 +193,8 @@ namespace BugTracker.Controllers
             return RedirectToAction("Details", "Tickets", new { id = ticketComment.TicketId });
             // return View();
         }
-
-		[HttpPost]
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> AddTicketAttachment([Bind("Id,FormFile,Description,TicketId")] TicketAttachment ticketAttachment)
 		{
@@ -233,7 +235,7 @@ namespace BugTracker.Controllers
 		}
 
         // GET: Assign Dev 
-
+        [Authorize(Roles = "Admin,ProjectManager")]
         [HttpGet]
         public async Task<IActionResult> AssignDeveloper(int? id)
         {
@@ -266,7 +268,7 @@ namespace BugTracker.Controllers
 
           //  return View(viewModel);
         }
-
+        [Authorize(Roles = "Admin,ProjectManager")]
         //POST Assign Dev
         [HttpPost]
         public async Task<IActionResult> AssignDeveloper(AssignTicketViewModel viewModel)
@@ -298,6 +300,7 @@ namespace BugTracker.Controllers
         // POST: Tickets/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin,ProjectManager, DeveloperUser, SubmitterUser")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title,Description,Archived,ProjectId,ArchivedByProject,TicketTypeId,TicketStatusId,TicketPriorityId")] Ticket ticket)
@@ -358,6 +361,7 @@ namespace BugTracker.Controllers
         // POST: Tickets/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Archived,ProjectId,TicketTypeId,TicketStatusId,TicketPriorityId,DeveloperUserId,SubmitterUserId")] Ticket ticket)
@@ -515,6 +519,20 @@ namespace BugTracker.Controllers
             return RedirectToAction(nameof(Details));
 
 
+        }
+
+        // GET: Tickets
+        public async Task<IActionResult> ArchivedTickets()
+        {
+
+            //var applicationDbContext = _context.Tickets
+            //    .Include(t => t.DeveloperUser).Include(t => t.Project).
+            //    Include(t => t.SubmitterUser).Include(t => t.TicketPriority)
+            //    .Include(t => t.TicketStatus).Include(t => t.TicketType);
+
+            IEnumerable<Ticket> tickets = await _ticketService.GetAllArchivedTicketsByCompanyIdAsync(_companyId);
+
+            return View(tickets);
         }
 
         [Authorize(Roles = "Admin,ProjectManager")]
