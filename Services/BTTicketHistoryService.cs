@@ -177,7 +177,7 @@ namespace BugTracker.Services
         }
         #endregion
 
-        #region Ad Histroy (2)
+        #region Add Histroy (2)
         public async Task AddHistoryAsync(int? ticketId, string? model, string? userId)
         {
             try
