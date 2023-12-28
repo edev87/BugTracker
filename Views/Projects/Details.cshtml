@@ -91,8 +91,8 @@
                 <div class="body">
                     <ul class=" list-unstyled basic-list">
 
-                                            <li class="text-dark p-1"> <span class="badge bg-pill bg-light">Start Date:</span> <span class="badge bg-dark">@Model.StartDate.ToString("MM.dd.yyyy")</span></li>
-                                            <li class="text-dark p-1"><span class="badge bg-pill bg-light">Deadline:</span> <span class="badge bg-dark">@Model.EndDate.ToString("MM.dd.yyyy")</span></li>
+                                            <li class="text-dark p-1"> <span class="badge bg-pill" style="background-color: dodgerblue">Start Date:</span> <span class="badge bg-dark">@Model.StartDate.ToString("MM.dd.yyyy")</span></li>
+                                            <li class="text-dark p-1"><span class="badge bg-pill"  style=" background-color: dodgerblue">Deadline:</span> <span class="badge bg-dark">@Model.EndDate.ToString("MM.dd.yyyy")</span></li>
                                             <li><span class="badge bg-pill bg-danger">Priority:</span> <span class="badge bg-dark">@Model.ProjectPriority?.Name</span></li>
                                     @if(today < end && today >= start)
                                     {

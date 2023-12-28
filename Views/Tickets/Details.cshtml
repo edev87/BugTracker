@@ -1,10 +1,9 @@
-﻿@using BugTracker.Enums;
-@model BugTracker.Models.Ticket
+﻿@model BugTracker.Models.Ticket
 @inject IBTFileService _fileService
 @inject IImageService _ImageService
 
 
-<h4> <span class="badge bg-pill bg-light"> Assigned Developer:</span> @Model.DeveloperUser?.FullName</h4>
+
 
 <div>
 	<div class ="xfont-weighteighteightgetainer-fluid">
@@ -13,9 +12,17 @@
 				<div class="row col-cols-2 mt-5">
                     <div class="card custom-card col m-1 p-2">
 						<div class="card-body">
-
-                            <label class="main-content-label mb-2" style="font-size:medium">Ticket Title</label>
-                            <h5 class="text-dark"> @Model.Title</h5>
+                            
+                           
+                            <div class="d-flex bd-highlight">
+                                <div class="w-75">
+                                    <label class="main-content-label mb-2" style="font-size:medium">Ticket Title</label>
+                                    <h5 class="text-dark"> @Model.Title</h5>
+                                </div>
+                                <div class="flex-shrink-1">
+                                    <h4> <span class="badge bg-pill bg-danger"> Assigned Developer:</span> @Model.DeveloperUser?.FullName</h4>
+                                    </div>
+                            </div>
 
                             <div class="list-card">
                                 <p class="text-dark">   
@@ -35,7 +42,7 @@
 								<div class="progress">
 									@* Razor code block *@
 									@{
-										var start = Model.Created;
+										var start = Model!.Created;
 										var end = Model.Updated;
 										var today = DateTime.Now;
 										var percent = today >= end ? 100 : today < start ? 0 : Math.Round((today.Subtract(start)) / (end.Subtract((start)) * 100));
@@ -51,9 +58,9 @@
 						<div class="card-body">
 							<ul class="list-unstyled">
 								@*Ticket date*@
-                                    <li> <span class="badge bg-pill bg-light">Date Entered:</span> <span class="badge bg-dark">  @Model?.Created </</span></li>
+                                    <li> <span class="badge bg-pill" style="background-color: dodgerblue">Date Entered:</span> <span class="badge bg-dark">  @Model?.Created </</span></li>
 								@*Project end date*@
-                                    <li><span class="badge bg-pill bg-light">Project Deadline:</span> <span class="badge bg-dark">  @Model?.Project?.EndDate </</span></li>
+                                    <li><span class="badge bg-pill" style="background-color: dodgerblue">Project Deadline:</span> <span class="badge bg-dark">  @Model?.Project?.EndDate </</span></li>
 								@*Ticket type*@
                                     <li><span class="badge bg-pill bg-primary">Ticket Type:</span> <span class="badge bg-dark">  @Model?.TicketType?.Name </span></li>
 								@*Ticket ppanty*@
@@ -231,7 +238,7 @@
                                                 <span class="date text-dark" style="font-weight:bold">@history.Created.ToString("dd MMMM yyyy")</span>
                                                 <h6>@history.Description</h6>
                                                 <span class="text-dark">By: <a class="ml-2 text-dark" href="" title="@history.User!.FullName"> @history.User.FullName</a></span>
-                                                <div class="">
+                                                <div id="History-text">
                                                     @if (history.Description!.Contains("New Ticket Created"))
                                                     {
                                                         <p class="text-dark">A ticket was added</p>
@@ -249,7 +256,7 @@
                                                         </p>
                                                         <p class="text-dark">
                                                             @($"Current {history.PropertyName}: ")
-                                                            <span style="color:black"> @history.NewValue</span>
+                                                            <span style="color:dodgerblue "> @history.NewValue</span>
                                                         </p>
                                                     }
 

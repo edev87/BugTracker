@@ -148,22 +148,13 @@ namespace BugTracker.Controllers
         // GET: Tickets/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Tickets == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var ticket = await _context.Tickets
-                .Include(t => t.DeveloperUser)
-                .Include(t => t.Project)
-                .Include(t => t.SubmitterUser)
-                .Include(t => t.TicketPriority)
-                .Include(t => t.TicketStatus)
-                .Include(t => t.TicketType)
-                .Include(t => t.Comments)
-                .Include(t => t.Attachments)
-                .Include(t => t.History)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            Ticket? ticket = await _ticketService.GetTicketByIdAsync(id, _companyId);
+                
             if (ticket == null)
             {
                 return NotFound();
@@ -171,6 +162,8 @@ namespace BugTracker.Controllers
 
             return View(ticket);
         }
+
+
         [Authorize(Roles = "Admin")]
         //POST
         [HttpPost]

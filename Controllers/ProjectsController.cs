@@ -34,8 +34,9 @@ namespace BugTracker.Controllers
 			_ticketService = ticketService;
 		}
 
-		// GET: Projects
-		public async Task<IActionResult> Index()
+        // GET: Projects
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Index()
         {
             IEnumerable<Project> projects = await _projectService.GetAllProjectsByCompanyIdAsync(_companyId);
             return View(projects);
@@ -78,6 +79,7 @@ namespace BugTracker.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> AssignProjectManager(AssignPMViewModel viewModel)
         {
             if (!string.IsNullOrEmpty(viewModel.PMId))
@@ -290,8 +292,8 @@ namespace BugTracker.Controllers
                     project.Created = DateTime.Now;
 
                     //project.Updated
-                    project.StartDate = DateTime.Now;
-                    project.EndDate = DateTime.Now;
+                   // project.StartDate = DateTime.Now;
+                   // project.EndDate = DateTime.Now;
                     if (project.ImageFile != null)
                     {
                         //Create the Image Service

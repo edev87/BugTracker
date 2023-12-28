@@ -1,7 +1,9 @@
 ﻿using BugTracker.Data;
+using BugTracker.Data.Enums;
 using BugTracker.Models;
 using BugTracker.Services.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.Build.Evaluation;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 
@@ -182,16 +184,23 @@ namespace BugTracker.Services
 		{
 			try
 			{
-				return await _context.Tickets
+				Ticket? ticket = await _context.Tickets
 										.Include(t => t.DeveloperUser)
 										.Include(t => t.SubmitterUser)
 										.Include(t => t.Project)
 										.Include(t => t.TicketPriority)
 										.Include(t => t.TicketStatus)
+										.Include(t => t.TicketType)
 										.Include(t => t.Comments)
+											.ThenInclude(c => c.User)
 										.Include(t => t.Attachments)
+											.ThenInclude(a => a.BTUser)
 										.Include(t => t.History)
-										.FirstOrDefaultAsync( t => t.Id == ticketId);
+											.ThenInclude(h => h.User)
+										.FirstOrDefaultAsync( t => t.Id == ticketId 
+										&& t.Project!.CompanyId == companyId);
+
+				return ticket!;
 			}
 			catch (Exception)
 			{
@@ -262,6 +271,7 @@ namespace BugTracker.Services
 
             //	throw;
             //}
+
         }
 
         public Task<IEnumerable<TicketPriority>> GetTicketPrioritiesAsync()
