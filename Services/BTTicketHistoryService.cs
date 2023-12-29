@@ -22,7 +22,7 @@ namespace BugTracker.Services
 
         #endregion
 
-        #region Add Hisory (1)
+        #region Add History (1)
         public async Task AddHistoryAsync(Ticket? oldTicket, Ticket? newTicket, string? userId)
         {
             //NEW TICKET HAS BEEN ADDED
