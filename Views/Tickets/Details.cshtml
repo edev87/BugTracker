@@ -42,8 +42,8 @@
 								<div class="progress">
 									@* Razor code block *@
 									@{
-										var start = Model!.Created;
-										var end = Model.Updated;
+										var start = Model!.Project!.StartDate;
+										var end = Model.Project!.EndDate;
 										var today = DateTime.Now;
 										var percent = today >= end ? 100 : today < start ? 0 : Math.Round((today.Subtract(start)) / (end.Subtract((start)) * 100));
 									}
@@ -58,7 +58,7 @@
 						<div class="card-body">
 							<ul class="list-unstyled">
 								@*Ticket date*@
-                                    <li> <span class="badge bg-pill" style="background-color: dodgerblue">Date Entered:</span> <span class="badge bg-dark">  @Model?.Created </</span></li>
+                                    <li> <span class="badge bg-pill" style="background-color: dodgerblue">Date Entered:</span> <span class="badge bg-dark">  @Model?.Project.StartDate </</span></li>
 								@*Project end date*@
                                     <li><span class="badge bg-pill" style="background-color: dodgerblue">Project Deadline:</span> <span class="badge bg-dark">  @Model?.Project?.EndDate </</span></li>
 								@*Ticket type*@

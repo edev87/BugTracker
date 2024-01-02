@@ -15,7 +15,7 @@ namespace BugTracker.Models
         public string? Description { get; set; }
 
         [DataType(DataType.Date)]
-        public DateTime Created { get => _created.ToLocalTime(); set => value.ToUniversalTime(); }
+        public DateTime Created { get { return _created; } set { _created = value.ToUniversalTime(); } }
 
         public string?  OldValue { get; set; }
 

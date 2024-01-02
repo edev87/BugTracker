@@ -338,13 +338,13 @@ namespace BugTracker.Controllers
                 return NotFound();
             }
 
-            var ticket = await _context.Tickets.FindAsync(id);
+            Ticket? ticket = await _ticketService.GetTicketByIdAsync(id, _companyId);
 
             if (ticket == null)
             {
                 return NotFound();
             }
-            ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Description", ticket.ProjectId);
+           
             ViewData["TicketPriorityId"] = new SelectList(_context.TicketPriorities, "Id", "Name", ticket.TicketPriorityId);
             ViewData["TicketStatusId"] = new SelectList(_context.TicketStatuses, "Id", "Name", ticket.TicketStatusId);
             ViewData["TicketTypeId"] = new SelectList(_context.TicketTypes, "Id", "Name", ticket.TicketTypeId);
@@ -372,11 +372,9 @@ namespace BugTracker.Controllers
 
                     Ticket? oldTicket = await _ticketService.GetTicketAsNoTrackingAsync(ticket.Id, _companyId);
 
-                    ticket!.SubmitterUserId = _userManager.GetUserId(User);
-                    ticket.Created = DateTime.Now;
+                    ticket.Updated = DateTime.Now;
 
-                    _context.Update(ticket);
-                    await _context.SaveChangesAsync();
+                    await _ticketService.UpdateTicketAsync(ticket);
 
                     //Add History
                     Ticket? newTicket = await _ticketService.GetTicketAsNoTrackingAsync(ticket.Id, _companyId);
@@ -396,6 +394,9 @@ namespace BugTracker.Controllers
                     {
                         throw;
                     }
+                }catch(Exception ex)
+                {
+                    string msg = ex.Message;
                 }
                 return RedirectToAction(nameof(Index));
             }

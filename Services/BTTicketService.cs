@@ -151,9 +151,12 @@ namespace BugTracker.Services
 							.Include(t => t.DeveloperUser)
 							.Include(t => t.History)
 							.Include(t => t.SubmitterUser)
+							.Include(t => t.TicketPriority)
+							.Include(t => t.TicketStatus)
+							.Include(t => t.TicketType)
 							.AsNoTracking()
 							.FirstOrDefaultAsync(t => t.Id == ticketId && t.Project!.CompanyId ==
-								companyId && t.Archived == false);
+								companyId);
 
 				return ticket!;
 			}
