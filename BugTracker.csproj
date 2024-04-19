@@ -7,6 +7,7 @@
     <UserSecretsId>aspnet-BugTacker-aa068bb7-1227-4da8-a1da-3e880dd6c41d</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>.</DockerfileContext>
+	  <InvariantGlobalization>true</InvariantGlobalization>
   </PropertyGroup>
 
   <ItemGroup>
